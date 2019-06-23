@@ -1,0 +1,98 @@
+// @import '../../node_modules//bulma//sass/utilities/_all.sass';
+@import '../../node_modules/bulma/bulma.sass';
+@import '../../node_modules/animate.css/animate.min.css';
+@import '../../node_modules/dragula/dist/dragula.min.css';
+@import '../../node_modules/flatpickr/dist/flatpickr.min.css';
+
+html {
+    overflow: hidden;
+}
+
+body {
+    height: 100vh;
+    background-color: #fafafa;
+    overflow: hidden;
+    .canvas-container.columns {
+        margin: 0;
+        .column {
+            padding: 0;
+        }
+    }
+}
+
+.dropdown {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    .dropdown-menu {
+        top: 60px;
+        left: 10px;
+        .triangle {
+            width: 0;
+            height: 0;
+            position: absolute;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid white;
+            top: -4px;
+            left: 10%;
+            margin-left: -8px;
+        }
+    }
+}
+
+.button {
+    left: 10px;
+    top: 10px;
+    .icon {
+        width: auto;
+        height: auto;
+    }
+}
+
+.side-menu {
+    min-height: 100vh;
+    overflow-y: auto;
+    background-color: white;
+    border-left: 1px solid #e8e8e8;
+    .hero-body {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+}
+
+.task-canvas {
+    height: 100vh;
+    padding: 10px;
+    padding-top: 100px;
+    .task-container {
+        margin-top: 10px;
+        .card-content {
+            min-height: 80px;
+            width: 100%;
+        }
+    }
+}
+
+.assignee-input {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    .image {
+        display: inline-block;
+        margin: 0;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+    }
+    p {
+        padding-left: 10px;
+        display: inline-block;
+    }
+}
+
+// .card {
+//     .card-content {
+//         padding: 15px;
+//     }
+// }
