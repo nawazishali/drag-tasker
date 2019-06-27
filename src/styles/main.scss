@@ -11,19 +11,13 @@ html {
 body {
     height: 100vh;
     background-color: #fafafa;
-    overflow: hidden;
-    .canvas-container.columns {
-        margin: 0;
-        .column {
-            padding: 0;
-        }
-    }
 }
 
-.dropdown {
+#info-menu {
     position: absolute;
     top: 10px;
     left: 10px;
+    z-index: 10;
     .dropdown-menu {
         top: 60px;
         left: 10px;
@@ -59,19 +53,25 @@ body {
         padding-top: 20px;
         padding-bottom: 20px;
     }
+
+    .draggable-options-container {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        padding: 10px;
+    }
 }
 
-.task-canvas {
+#canvas {
     height: 100vh;
-    padding: 10px;
-    padding-top: 100px;
-    .task-container {
-        margin-top: 10px;
-        .card-content {
-            min-height: 80px;
-            width: 100%;
-        }
-    }
+    position: relative;
+    overflow: auto;
+    // -webkit-transform: scale(0.75);
+    // -moz-transform: scale(0.75);
+    // -ms-transform: scale(0.75);
+    // -o-transform: scale(0.75);
+    // transform: scale(0.75);
 }
 
 .assignee-input {
@@ -91,8 +91,30 @@ body {
     }
 }
 
-// .card {
-//     .card-content {
-//         padding: 15px;
-//     }
-// }
+.card {
+    width: 125px;
+    min-height: 115px;
+    margin: 5px auto;
+    border-radius: 6px;
+    .card-content {
+        padding: 10px;
+        .media {
+            margin-bottom: 10px;
+        }
+    }
+}
+
+.absolute {
+    position: absolute;
+}
+
+.columns {
+    margin: 0;
+    .column {
+        padding: 0;
+    }
+}
+
+.node {
+    touch-action: none;
+}

@@ -1,24 +1,11 @@
 import flatpickr from "flatpickr";
-import dragula from 'dragula';
+import { jsPlumb } from 'jsplumb/dist/js/jsplumb.js';
+// import interact from 'interactjs';
 
 const infoMenuButton = document.querySelector('#info-menu-btn');
 const infoMenu = document.querySelector('#info-menu');
 const body = document.querySelector('body');
-const taskCanvas = document.querySelector('.task-canvas');
-
-let createElementFromHTML = (htmlString) => {
-    let div = document.createElement('div');
-    div.innerHTML = htmlString.trim();
-    return div.firstChild;
-}
-
-let addTaskContainer = () => {
-    return taskCanvas.appendChild(createElementFromHTML(`
-    <div class="card task-container">
-        <div class="card-content columns"></div>
-    </div>
-    `));
-}
+const canvas = document.querySelector('#canvas');
 
 body.addEventListener('click', (event) => {
     event.preventDefault();
@@ -30,54 +17,98 @@ infoMenuButton.addEventListener('click', (event) => {
     infoMenu.classList.contains('is-active') ? infoMenu.classList.remove('is-active') : infoMenu.classList.add('is-active');
 })
 
-let drake = dragula([
-    document.querySelector('.draggable-options-container'),
-    document.querySelector('.task-container .card-content'),
-    document.querySelector('.assignee-container')
-], {
-        copy: function (el, source) {
-            return source.classList.contains('draggable-options-container') || source.classList.contains('assignee-container');
-        },
-        accepts: function (el, target, source) {
-            flatpickr(".flatpickr");
-            return !target.classList.contains('draggable-options-container');
-        },
-        moves: function (el, container) {
-            return !el.classList.contains('disable-drag');
-        }
-    })
-    .on('drag', (el, container) => {
-        if (el.classList.contains('task-input') && !container.classList.contains('card-content')) {
-            drake.containers.push(addTaskContainer().childNodes[1]);
-        }
-    })
-    .on('dragend', (el, container) => {
-        drake.containers = drake.containers.filter((elem) => {
-            if (elem) {
-                return elem.childNodes.length;
-            }
-        })
+jsPlumb.ready(function () {
 
-        taskCanvas.childNodes.forEach((elem) => {
-            if (elem && elem.classList && elem.classList.contains('task-container')) {
-                if (!elem.childNodes[1].childNodes.length) elem.remove();
-            }
-        })
-    })
-    .on('drop', (el, target, source) => {
-        if (el.classList.contains('assignee-input')) el.classList.add('card');
-        if (target && target.classList && target.classList.contains('card-content')) {
-            let duplicate = false;
-            target.childNodes.forEach((child, index, self) => {
-                let arr = Array.from(self);
-                let duplicateIndex = arr.findIndex((elem) => elem.classList.contains(el.classList[1]));
-                if (duplicateIndex >= 0 && duplicateIndex !== index && el.classList[1] === child.classList[1]) duplicate = true;
-            });
-            if (duplicate || ((target == source) && el.classList.contains('task-input'))) {
-                drake.cancel('revert');
-            }
-            duplicate = false;
+    // this is the paint style for the connecting lines..
+    var sourceEndpoint = {
+        endpoint: "Dot",
+        paintStyle: {
+            stroke: "#7AB02C",
+            fill: "transparent",
+            radius: 4,
+            strokeWidth: 1
+        },
+        isSource: true,
+        isTarget: true,
+        // connector: ["Flowchart", { gap: 15, stub: [50, 50], cornerRadius: 10 }],
+        connector: ["Bezier", { curviness: 70 }],
+        connectorStyle: {
+            strokeWidth: 2,
+            stroke: "#61B7CF",
+            joinstyle: "round",
+            outlineStroke: "white",
+            outlineWidth: 2,
+            dashstyle: '2 2'
+        },
+        hoverPaintStyle: {
+            fill: "#216477",
+            stroke: "#216477"
+        },
+        connectorHoverStyle: {
+            strokeWidth: 3,
+            stroke: "#216477",
+            outlineWidth: 5,
+            outlineStroke: "white"
+        },
+        maxConnections: -1,
+        dragOptions: {},
+        allowLoopback: false,
+        connectorOverlays: [["Arrow", { location: 0.90, width: 10, height: 10 }]]
+    }
+
+    let i = 0;
+    let currentDragPosition = { x: 0, y: 0 };
+
+    jsPlumb.setContainer(canvas);
+    jsPlumb.draggable(document.querySelectorAll('.element'), {
+        clone: true,
+        drag: function (e) {
+            currentDragPosition.x = `${e.pos[0]}px`;
+            currentDragPosition.y = `${e.pos[1]}px`;
         }
-    })
+    });
+    jsPlumb.droppable(canvas, {
+        drop: function (e) {
+            if (e.drag.el.classList.contains('element')) {
+                const anchors = ["Top", "Bottom", "Left", "Right"];
+                let droppedElement = e.drag.el.cloneNode(true);
+                droppedElement.classList.remove('element');
+                droppedElement.classList.add('absolute', 'node');
+                droppedElement.id = 'node' + i++;
+                droppedElement.style.left = currentDragPosition.x;
+                droppedElement.style.top = currentDragPosition.y;
+                canvas.append(droppedElement);
+                jsPlumb.draggable(droppedElement, { containment: false });
+                anchors.forEach((anchor => {
+                    jsPlumb.addEndpoint(droppedElement, sourceEndpoint, { anchor });
+                }))
+                flatpickr(".flatpickr");
+                // interact('.node')
+                //     .resizable({
+                //         edges: { right: true, bottom: true },
+                //         modifiers: [
+                //             // minimum size
+                //             interact.modifiers.restrictSize({
+                //                 min: { width: 125, height: 115 },
+                //             }),
+                //         ]
+                //     })
+                //     .on('resizemove', function (event) {
+                //         var target = event.target;
+                //         // update the element's style
+                //         target.style.width = event.rect.width + 'px';
+                //         target.style.height = event.rect.height + 'px';
+                //         jsPlumb.revalidate(droppedElement);
+                //     });
+            }
+            return true;
+        },
+        rank: 10
+    });
+
+    jsPlumb.bind("click", function (c) {
+        jsPlumb.deleteConnection(c);
+    });
+});
 
 flatpickr(".flatpickr");

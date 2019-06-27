@@ -13,6 +13,8 @@
     "bulma": "^0.7.5",
     "dragula": "^3.7.2",
     "flatpickr": "^4.6.1",
+    "interactjs": "^1.4.0-rc.13",
+    "jsplumb": "2.10.0",
     "parcel-bundler": "^1.12.3"
   },
   "devDependencies": {

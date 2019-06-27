@@ -1,5 +1,5 @@
-<div class="side-menu">
-    <section class="hero is-info">
+<div class="side-menu has-background-grey-dark">
+    <section class="hero is-dark">
         <div class="hero-body">
             <div class="container">
                 <h1 class="title has-text-centered">
@@ -9,38 +9,55 @@
         </div>
     </section>
     <section class="draggable-options-container">
-        <div class="card task-input">
+        <div class="card element has-background-info">
             <div class="card-content">
+                <div class="media">
+                    <div class="media-content has-text-centered has-text-light">
+                        <i class="fas fa-clipboard-check fa-3x"></i>
+                    </div>
+                </div>
                 <div class="content">
-                    <input class="input is-primary" type="text" placeholder="Task Input">
+                    <input class="input is-small is-rounded" type="text" placeholder="Task Input">
                 </div>
             </div>
         </div>
-        <div class="card comments-input">
+        <div class="card element has-background-primary">
             <div class="card-content">
+                <div class="media">
+                    <div class="media-content has-text-centered has-text-light">
+                        <i class="fas fa-comments fa-3x"></i>
+                    </div>
+                </div>
                 <div class="content">
-                    <textarea class="textarea is-primary" placeholder="Comment Box" rows="1"></textarea>
+                    <textarea class="textarea is-small" placeholder="Comment Box" rows="1"></textarea>
                 </div>
             </div>
         </div>
-        <div class="card date-input">
+        <div class="card element has-background-success">
             <div class="card-content">
                 <div class="content">
-                    <input class="input is-primary flatpickr" type="text" placeholder="Due Date">
+                    <div class="media">
+                        <div class="media-content has-text-centered has-text-light">
+                            <i class="fas fa-calendar-alt fa-3x"></i>
+                        </div>
+                    </div>
+                    <input class="input is-small is-rounded flatpickr" type="text" placeholder="Due Date">
                 </div>
             </div>
         </div>
-        <div class="card files-input">
+        <div class="card element has-background-link">
             <div class="card-content">
                 <div class="content">
+                    <div class="media">
+                        <div class="media-content has-text-centered has-text-light">
+                            <i class="fas fa-upload fa-3x"></i>
+                        </div>
+                    </div>
                     <div class="field">
-                        <div class="file is-centered is-primary">
+                        <div class="file is-centered is-info is-small">
                             <label class="file-label">
                                 <input class="file-input" type="file" name="resume">
                                 <span class="file-cta">
-                                    <span class="file-icon">
-                                        <i class="fas fa-upload"></i>
-                                    </span>
                                     <span class="file-label">
                                         Choose a file…
                                     </span>
@@ -51,28 +68,27 @@
                 </div>
             </div>
         </div>
-        <div class="card disable-drag">
+        <div class="card element has-background-warning">
             <div class="card-content">
+                <div class="media">
+                    <div class="media-content has-text-centered has-text-light">
+                        <i class="fas fa-user fa-3x"></i>
+                    </div>
+                </div>
                 <div class="content assignee-container">
-                    <div class="dummy assignee-input">
-                        <img class="image" src="https://bulma.io/images/placeholders/128x128.png">
-                        <p>User Name</p>
-                    </div>
-                    <div class="dummy assignee-input">
-                        <img class="image" src="https://bulma.io/images/placeholders/128x128.png">
-                        <p>User Name</p>
-                    </div>
-                    <div class="dummy assignee-input">
-                        <img class="image" src="https://bulma.io/images/placeholders/128x128.png">
-                        <p>User Name</p>
-                    </div>
-                    <div class="dummy assignee-input">
-                        <img class="image" src="https://bulma.io/images/placeholders/128x128.png">
-                        <p>User Name</p>
-                    </div>
-                    <div class="dummy assignee-input">
-                        <img class="image" src="https://bulma.io/images/placeholders/128x128.png">
-                        <p>User Name</p>
+                    <div class="field">
+                        <div class="control">
+                            <div class="select is-small is-rounded">
+                                <select>
+                                    <option selected disabled>Select User</option>
+                                    <option>Nawazish</option>
+                                    <option>Nick</option>
+                                    <option>Zeeshan</option>
+                                    <option>Haris</option>
+                                    <option>Kashif</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
